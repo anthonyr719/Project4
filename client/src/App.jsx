@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect}from 'react';
 import axios from 'axios';
 import Login from './Login';
 import Signup from './Signup';
@@ -10,15 +10,15 @@ import {
   Redirect
 } from 'react-router-dom';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      token: '',
-      user: null,
-      errorMessage: '',
-      apiData: null
-    }
+  class App extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        token: '',
+        user: null,
+        errorMessage: '',
+        apiData: null
+      }
     this.checkForLocalToken = this.checkForLocalToken.bind(this);
     this.liftToken = this.liftToken.bind(this);
     this.logout = this.logout.bind(this);
@@ -72,6 +72,9 @@ class App extends React.Component {
       user: null
     })
   }
+  
+  // 
+  // 
 
   componentDidMount() {
     this.checkForLocalToken()
@@ -83,8 +86,9 @@ class App extends React.Component {
     if (user) {
       contents = (
         <>
-        <p>Hello, {user.name}</p>
+        {/* <p>Hello, {user.name}</p> */}
         <p onClick={this.logout}>Logout</p>
+        <Home  user={user}/>
         </>
       )
     } else {
@@ -99,7 +103,7 @@ class App extends React.Component {
     return(
       <>
       {contents}
-      <Home />
+      {/* <Home /> */}
       </>
     );
   }

@@ -3,35 +3,32 @@ import './App.css';
 import axios from 'axios';
 import GamesList from './GamesList';
 
+
 function Home() {
   const [games, setGames] = useState([])
-  const [gameId, setGameId] = useState([])
+  const [gameId, setGameId] = useState([1])
+  const [singleGame, setSingleGame] = useState({})
+  const [favorites, setFavorites]  = useState([])
 
-  let config = {
-        headers: {
-            "Authorization": {
-                "X-RapidAPI-Key": "26689b90c8msh4e241c3890fb264p18d105jsnd4e0a1699fb2"
-            }
-        }
-    }
+  const addToFavorites = (games) => {
+    const newGameFavs = [...favorites, games]
+    setFavorites(newGameFavs);
+  }
 
-  useEffect( () => {
-      axios.get('/test').then(response => {
-          console.log('get data back from backend', response.data.result);
-          setGames(response.data.result);
-      })
-    // console.log("Running the effect")
-    // axios.get(`https://chicken-coop.fr/rest/games?title=mario`, config).then( (response) => {
-    //   setGames(response.data.result);
-    // }).catch(err => {
-    //     console.log('errors from chicken-coop: ', err);
-    // })
-  }, [])
+//   useEffect( () => {
+//     console.log("Running the first effect")
+//     axios.get(`https://pokeapi.co/api/v2/pokemon?limit=151`).then( (response) => {
+//       setPokemon(response.data.results);
+//       console.log(response.data.results)
+//     })
+//   }, [])
+
+
 
   return (
     <>
     <div>
-      Games:
+      {/* Games: */}
       <GamesList games={games}/>
       {/* {games.title} */}
     </div>
