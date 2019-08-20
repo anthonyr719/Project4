@@ -36,29 +36,39 @@ db.on('error', (err) => {
 
 const chickenCoopHeader = {
     headers: {
-        "Authorization": {
-            "X-RapidAPI-Key": "26689b90c8msh4e241c3890fb264p18d105jsnd4e0a1699fb2"
-        }
+            "x-rapidapi-key": "26689b90c8msh4e241c3890fb264p18d105jsnd4e0a1699fb2"
     }
 }
+
+const chickenCoopToRapidApi = {
+    "PS4": "playstation-4",
+    "iOS": "ios",
+    "SWITCH": "switch",
+    "PC": "pc",
+    "X360": "xbox-360",
+}
+
 
 app.get('/games', async(req, res) => {
     const queryParams = req.query
     const title = queryParams && queryParams.title ? queryParams.title : ""
-    const searchResult = await axios.get(`https://chicken-coop.fr/rest/games?title=${title}`, chickenCoopHeader)
+    const searchResult = await axios.get(`https://chicken-coop.fr/rest/games?title=${title}`)
     res.json(searchResult.data.result);  
 })
 
 app.get('/games/:title', async (req, res) =>{
     const title = req.params.title
-    const platform = req.query.platform
-    const searchSingleGame = await axios.get(`https://chicken-coop.fr/rest/games/${title}?platform=${platform}`, chickenCoopHeader)
+    const platform = chickenCoopToRapidApi[req.query.platform]
+    const searchSingleGame = await axios.get(`https://chicken-coop.p.rapidapi.com/games/${title}?platform=${platform}`, chickenCoopHeader)
     res.json(searchSingleGame.data.result);
 })
 
-// app.post
+// app.put rating
 
-// app.delete
+// app.post adding to favs
+// user and favorites
+
+// app.delete kill it!! 
 
 app.use('/auth/login', loginLimiter);
 app.use('/auth/signup', signupLimiter);

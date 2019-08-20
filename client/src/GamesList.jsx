@@ -1,16 +1,16 @@
 import React from 'react';
 import axios from 'axios';
-import {Loader, Container, Table} from 'semantic-ui-react';
-
+import {Loader, Container, Table, Modal} from 'semantic-ui-react';
+import GameDetail from './GameDetail'
 
 class GamesList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             games: [],
-            title: "" 
+            searchTitle: "" 
         }
-        this.updateGameTitle = this.updateGameTitle.bind(this);
+        this.updateSearchTitle = this.updateSearchTitle.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     async componentDidMount() {
@@ -19,12 +19,6 @@ class GamesList extends React.Component {
             games: gamesList.data
         })
     };
-
-    // function GamesList(games, handleGamesDetail, addToFavorites) {
-    //     const [games, setGames] = useState([])
-    //     const [title, setTitle] =  
-    // }
-
 
     // function GamesList({pokemon, handlePokemonDetail, addToFavorites}) {
     //     let content;
@@ -41,8 +35,8 @@ class GamesList extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault()
-        console.log(this.state.title);
-        axios.get(`/games?title=${this.state.title}`)
+        // console.log(this.state.searchTitle);
+        axios.get(`/games?title=${this.state.searchTitle}`)
             .then(res => {
                 console.log("success!", res.data);
                 this.setState({
@@ -51,27 +45,29 @@ class GamesList extends React.Component {
             })
             .catch(err => {
                 console.log(err);
-            // this.setState({
-            //     message: "Maximum accounts exceeded. Please try again later."
-            // })
-        });
+            }
+        );
     }
 
+    renderGameDetail = (game) => {
+        return <GameDetail game={game}/>
+    }
 
     renderGamesList = () => {
-        return this.state.games.length > 0 ? this.state.games.map((games, id) => {
+        return this.state.games.length > 0 ? this.state.games.map((game, id) => {
             return (
                 <Table.Row key={id}>
-                    <Table.Cell><p onClick>{games.title}</p></Table.Cell>
-                    <Table.Cell>{games.platform}</Table.Cell>
+                    <Table.Cell><a href={`/games/${game.title}/${game.platform}`}>{game.title}</a></Table.Cell>
+                    <Table.Cell>{game.platform}</Table.Cell>
                     <Table.Cell><button>Add To Favorites</button></Table.Cell>
                 </Table.Row>
             )
         }) : null
     }
-    updateGameTitle(e) {
+    updateSearchTitle(e) {
+        // console.log(e.target.value)
         this.setState ({
-           title: e.target.value
+           searchTitle: e.target.value
         })
      }
     
@@ -80,7 +76,7 @@ class GamesList extends React.Component {
             <Container>
                 Games:
                 <form onSubmit={this.handleSubmit}>
-                    <input value={this.state.title} onChange={this.updateGameTitle} type="text"/>
+                    <input value={this.state.searchTitle} onChange={this.updateSearchTitle} type="text"/>
                     <button>Search</button>
                 </form>
                 <Table>

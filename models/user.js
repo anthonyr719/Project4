@@ -20,11 +20,8 @@ const userSchema = new mongoose.Schema({
         minlength: [5, 'Email must be between 5 and 99 characters'],
         maxlength: [99, 'Email must be between 5 and 99 characters']
     },
-    games: [{
-        type: mongoose.Schema.Types.ObjectId, ref:'Game'
-    }],
-    favs: {
-        type: mongoose.Schema.Types.ObjectId, ref:'Fav'
+    favorite: {
+        type: mongoose.Schema.Types.ObjectId, ref:'Favorite'
     }
 });
 

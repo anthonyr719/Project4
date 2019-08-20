@@ -9,6 +9,8 @@ import {
   Link,
   Redirect
 } from 'react-router-dom';
+import GamesList from './GamesList';
+import GameDetail from './GameDetail';
 
   class App extends React.Component {
     constructor(props) {
@@ -86,9 +88,14 @@ import {
     if (user) {
       contents = (
         <>
+          <p onClick={this.logout}>Logout</p>
+          <Router>
+            <Route exact path='/' component={GamesList} />
+            <Route exact path='/games/:title/:platform' component={GameDetail} />
+            {/* <Route exact path='/faves' render={(props)=> <DisplayMap {...props} />} /> */}
+          </Router>
         {/* <p>Hello, {user.name}</p> */}
-        <p onClick={this.logout}>Logout</p>
-        <Home  user={user}/>
+        {/* <Home  user={user}/> */}
         </>
       )
     } else {

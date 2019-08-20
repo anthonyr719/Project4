@@ -2,6 +2,11 @@ import React, {useState, useEffect} from 'react';
 import './App.css';
 import axios from 'axios';
 import GamesList from './GamesList';
+import {
+    BrowserRouter as Router,
+    Route
+} from 'react-router-dom';
+import GameDetail from './GameDetail';
 
 
 function Home() {
@@ -28,9 +33,11 @@ function Home() {
   return (
     <>
     <div>
-      {/* Games: */}
-      <GamesList games={games}/>
-      {/* {games.title} */}
+    <Router>
+        <Route exact path='/' render={<GamesList games={games}/>} />
+        <Route exact path='/games/:title/:platform' render={(props)=> <GameDetail {...props}/>}/>
+        {/* <Route exact path='/faves' render={(props)=> <DisplayMap {...props} />} /> */}
+    </Router>
     </div>
 
     </>
