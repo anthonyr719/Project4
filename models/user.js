@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const Favorite = require('./favorite')
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -20,9 +21,7 @@ const userSchema = new mongoose.Schema({
         minlength: [5, 'Email must be between 5 and 99 characters'],
         maxlength: [99, 'Email must be between 5 and 99 characters']
     },
-    favorite: {
-        type: mongoose.Schema.Types.ObjectId, ref:'Favorite'
-    }
+    favorites: [Favorite]
 });
 
 userSchema.set('toObject', {
@@ -47,6 +46,5 @@ userSchema.pre('save', function(next) {
 userSchema.methods.authenticated = function(password) {
     return bcrypt.compareSync(password, this.password);
 }
-
 
 module.exports = mongoose.model('User', userSchema);

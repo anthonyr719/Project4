@@ -7,6 +7,7 @@ import {
     Route
 } from 'react-router-dom';
 import GameDetail from './GameDetail';
+import FavoriteList from './FavoriteList';
 
 
 function Home() {
@@ -15,8 +16,8 @@ function Home() {
   const [singleGame, setSingleGame] = useState({})
   const [favorites, setFavorites]  = useState([])
 
-  const addToFavorites = (games) => {
-    const newGameFavs = [...favorites, games]
+  const addToFavorites = (game) => {
+    const newGameFavs = [...favorites, game]
     setFavorites(newGameFavs);
   }
 
@@ -33,11 +34,13 @@ function Home() {
   return (
     <>
     <div>
-    <Router>
-        <Route exact path='/' render={<GamesList games={games}/>} />
-        <Route exact path='/games/:title/:platform' render={(props)=> <GameDetail {...props}/>}/>
+    {/* <Router> */}
+        {/* <Route exact path='/' render={<GamesList games={games}/>} /> */}
+        {/* <Route exact path='/games/:title/:platform' render={(props)=> <GameDetail {...props}/>}/> */}
         {/* <Route exact path='/faves' render={(props)=> <DisplayMap {...props} />} /> */}
-    </Router>
+    {/* </Router> */}
+    <GamesList addToFavorites={addToFavorites}/>
+    {/* <FavoriteList favorites={favorites}/>> */}
     </div>
 
     </>

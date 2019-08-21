@@ -12,6 +12,7 @@ import {
 import GamesList from './GamesList';
 import GameDetail from './GameDetail';
 
+
   class App extends React.Component {
     constructor(props) {
       super(props);
@@ -25,6 +26,7 @@ import GameDetail from './GameDetail';
     this.liftToken = this.liftToken.bind(this);
     this.logout = this.logout.bind(this);
   }
+
 
   checkForLocalToken() {
     var token = localStorage.getItem('mernToken');
@@ -88,10 +90,12 @@ import GameDetail from './GameDetail';
     if (user) {
       contents = (
         <>
-          <p onClick={this.logout}>Logout</p>
+          <button onClick={this.logout}>Logout</button>
+          <button onClick={() => window.location.replace('/')}>Home</button>
+          <button onClick={() => window.location.replace('/favorites')}>My Favorites</button>
           <Router>
-            <Route exact path='/' component={GamesList} />
-            <Route exact path='/games/:title/:platform' component={GameDetail} />
+            <Route exact path='/' render={(props) => <GamesList {...props} user={user} />} />
+      <Route exact path='/games/:title/:platform' render={(props) => <GameDetail {...props} user={user}/>}/>
             {/* <Route exact path='/faves' render={(props)=> <DisplayMap {...props} />} /> */}
           </Router>
         {/* <p>Hello, {user.name}</p> */}

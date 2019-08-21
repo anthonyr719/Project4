@@ -4,7 +4,7 @@ const favoriteSchema = new mongoose.Schema({
     _user: {
         type: String,
     },
-    userRating: {
+    userReview: {
         type: String
     },
     title: {
@@ -12,7 +12,14 @@ const favoriteSchema = new mongoose.Schema({
     },
     platform: {
         type: String,
-    }
+    },
+    description: {
+        type: String,
+    },
+    image: {
+        // api sends url for image
+        type: String,
+    },
 });
 
 module.exports = favoriteSchema;
